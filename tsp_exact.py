@@ -43,6 +43,12 @@ xmax = 10
 ymax = 10
 
 nodes = create_N(n,xmax,ymax)
+
+# To insert manually the nodes coordinates
+# Do not forget to change the correct number of nodes 'n'
+# 
+#nodes = [(2,1), (2,2), (2,3),(2,4), (8,9), (8,8), (8,7), (8,6)]
+
 edges = create_E(nodes)
 
 scores = []
@@ -71,8 +77,8 @@ print 'Total number of solutions: ' + str(n-1) + '! = ' + str(fact(n-1))
 
 
 #Ploting
-pylab.xlim=(0,10)
-pylab.ylim=(0,10)
+pylab.xlim=(0,xmax)
+pylab.ylim=(0,ymax)
 x = [ nodes[i][0] for i in scores[0][1] ]
 y = [ nodes[i][1] for i in scores[0][1] ]
 pylab.plot(x , y ,'-o')
@@ -87,6 +93,6 @@ pylab.xlabel('Minimum total distance: ' + str("%.4f" % scores[0][0]))
 
 pylab.show()
 
-
+print nodes
 
 
