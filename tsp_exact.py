@@ -9,6 +9,10 @@ import itertools
 
 
 #Functions
+
+#Factorial
+def fact(x): return (1 if x==0 else x * fact(x-1))
+
 #Create nodes
 def create_N(_n,_xmax,_ymax):
 	_nodes = []
@@ -17,8 +21,6 @@ def create_N(_n,_xmax,_ymax):
 		_tmpy = pylab.rand()*_ymax
 		_nodes.append((_tmpx, _tmpy))
 	return _nodes
-
-
 
 #Create edges for all nodes
 def create_E(_nodes):
@@ -45,7 +47,7 @@ edges = create_E(nodes)
 
 scores = []
 
-#Calculating the distance for all possibles paths startinh in node 0
+#Calculating the distance for all possibles paths starting in node 0
 #
 for path in itertools.permutations(range(1, len(nodes))):
 	path = [0] + list(path) + [0]
@@ -64,22 +66,23 @@ scores = sorted(scores, cmp=lambda x,y: cmp(x[0], y[0]))
 print 'Number of nodes: ', n
 print 'Minimum distance: ', scores[0][0]
 print 'Path: ', scores[0][1]
+print 'Total number of solutions: ' + str(n-1) + '! = ' + str(fact(n-1))
 
-#Ploting
 
 
 #Ploting
 pylab.xlim=(0,10)
 pylab.ylim=(0,10)
-pylab.plot([ nodes[i][0] for i in scores[0][1] ], [ nodes[i][1] for i in scores[0][1] ],'-o')
+x = [ nodes[i][0] for i in scores[0][1] ]
+y = [ nodes[i][1] for i in scores[0][1] ]
+pylab.plot(x , y ,'-o')
 
-t = ax.text(x, y, str((x,y)), withdash=True,
-	dashdirection=dd,
-	dashlength=dl,
-	rotation=r,
-	dashrotation=dr,
-	dashpush=dp,
-	)
+
+for i in range(n):
+	t = pylab.text(x[i], y[i], 'Node ' +str(scores[0][1][i]) + ' - ' + str(("%.2f" % x[i], "%.2f" %  y[i])))
+
+pylab.title('Path: ' + str(scores[0][1]))
+pylab.xlabel('Minimum total distance: ' + str("%.4f" % scores[0][0]))
 
 
 pylab.show()
