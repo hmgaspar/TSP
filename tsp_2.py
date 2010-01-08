@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-from pylab import *
+import pylab
 import itertools
 
 #Functions
@@ -8,8 +8,8 @@ import itertools
 def create_N(_n,_xmax,_ymax):
 	_nodes = []
 	for i in range(_n):
- 		_tmpx = rand()*_xmax
-		_tmpy = rand()*_ymax
+ 		_tmpx = pylab.rand()*_xmax
+		_tmpy = pylab.rand()*_ymax
 		_nodes.append((_tmpx, _tmpy))
 	return _nodes
 
@@ -29,7 +29,7 @@ def create_E(_nodes):
 
 
 #Code
-n = 10
+n = 8
 xmax = 10
 ymax = 10
 
@@ -40,9 +40,10 @@ scores = []
 
 for path in itertools.permutations(range(1, len(nodes))):
 	path = [0] + list(path) + [0]
-	distance = 0.0
-  	for i in range(len(path)-1):
-   		distance += edges[(path[i], path[i+1])]
+#	distance = 0.0
+ # 	for i in range(len(path)-1):
+#   		distance += edges[(path[i], path[i+1])]
+	distance = sum([ edges[(path[i], path[i+1])] for i in range(len(path)-1) ])
 	scores.append((distance, path))
 
 
@@ -66,9 +67,12 @@ print edges
 
 
 #Ploting
-#plot(nodes[0], nodes[1],'o')
-plot([ nodes[i][0] for i in scores[0][1] ], [ nodes[i][1] for i in scores[0][1] ],'-o',xlim=(0,10),ylim=(0, 10))
-show()
+pylab.plot([ nodes[i][0] for i in scores[0][1] ], [ nodes[i][1] for i in scores[0][1] ],'-o')
+
+pylab.xlim=(0,10)
+pylab.ylim=(0,10)
+
+pylab.show()
 
 
 
