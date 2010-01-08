@@ -29,7 +29,7 @@ def create_E(_nodes):
 
 
 #Code
-n = 3
+n = 10
 xmax = 10
 ymax = 10
 
@@ -41,20 +41,34 @@ scores = []
 for path in itertools.permutations(range(1, len(nodes))):
 	path = [0] + list(path) + [0]
 	distance = 0.0
-  	for i in range(n-1):
+  	for i in range(len(path)-1):
    		distance += edges[(path[i], path[i+1])]
-		scores.append((distance, path))
+	scores.append((distance, path))
+
 
 
 scores = sorted(scores, cmp=lambda x,y: cmp(x[0], y[0]))
-print scores[0]
+print scores[0][1][0]
 
 #Ploting
-#plot(nodes)
+#plot (nodes,'o')
+
 #show()
 
 
+print len(edges)
+print 'score 0 - ', scores[0]
+print 'nodes'
+print nodes
+print ''
+print 'edges'
+print edges
 
+
+#Ploting
+#plot(nodes[0], nodes[1],'o')
+plot([ nodes[i][0] for i in scores[0][1] ], [ nodes[i][1] for i in scores[0][1] ],'-o',xlim=(0,10),ylim=(0, 10))
+show()
 
 
 
