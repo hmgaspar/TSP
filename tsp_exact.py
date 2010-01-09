@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 import pylab
 import itertools
+import time
 
 #Simple code to find the exact solution to the travel salesman problem
 # It creates random nodes
@@ -37,10 +38,11 @@ def create_E(_nodes):
 
 #Code
 n = 8
-
 #max range (x,y)
 xmax = 10
 ymax = 10
+
+run_t = time.time()
 
 nodes = create_N(n,xmax,ymax)
 
@@ -51,7 +53,9 @@ nodes = create_N(n,xmax,ymax)
 
 edges = create_E(nodes)
 
+print time.time() -run_t
 scores = []
+print nodes[0][-1]
 
 #Calculating the distance for all possibles paths starting in node 0
 #
@@ -64,6 +68,7 @@ for path in itertools.permutations(range(1, len(nodes))):
 #	distance = sum([ edges[(path[i], path[i+1])] for i in range(len(path)-1) ])
 	scores.append((distance, path))
 
+print time.time() -run_t
 
 # Sorting the solutions from min to max distances
 # scores[0] is the minimum, scores[-1] is the maximum

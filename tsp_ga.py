@@ -56,9 +56,9 @@ xmax = 10
 ymax = 10
 
 #GA Parameters
-pop_size = 100
+pop_size = 50
 mutation_probability = 0.20
-number_of_generations = 500
+number_of_generations = 1000
 
 
 nodes = create_N(n,xmax,ymax)
@@ -208,7 +208,7 @@ print 'Number of nodes: ', n
 print 'Minimum distance: ', min_s_gen1
 print 'Path: ', min_p_gen1
 print 'Population size: ', pop_size
-print 'Number of generation: ', number_of_generations
+print 'Number of generations: ', number_of_generations
 print 'Number of possible solutions:' + str(n-1) + '! = ' + str(fact(n-1))
 
 
@@ -226,6 +226,15 @@ for i in range(n):
 
 pylab.title('Path: ' + str(min_p_gen1))
 pylab.xlabel('Minimum total distance: ' + str("%.4f" % min_s_gen1))
+
+
+#Ploting data for maximum values for each generation
+pylab.figure(2)
+pylab.plot(range(number_of_generations),generations_s, 'ro')
+pylab.xlabel('Generations')
+pylab.ylabel('Minimum distance')
+
+pylab.show()
 
 
 pylab.show()
