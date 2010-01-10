@@ -51,7 +51,7 @@ def roulette(values, fitness):
 run_t = time.time()
 
 #numeber of nodes
-n = 20
+n = 30
 
 #max range (x,y)
 xmax = 10
@@ -60,7 +60,7 @@ ymax = 10
 #GA Parameters
 pop_size = 50
 mutation_probability = 0.20
-number_of_generations = 1000
+number_of_generations = 500
 
 
 nodes = create_N(n,xmax,ymax)
