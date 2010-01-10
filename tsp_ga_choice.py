@@ -3,6 +3,8 @@ import pylab
 import itertools
 import time
 import random
+from multiprocessing import Process
+
 
 #Simple code to find the exact solution to the travel salesman problem
 # It creates random nodes
@@ -68,16 +70,51 @@ nodes = create_N(n,xmax,ymax)
 # 
 #nodes = [(2,1), (2,2), (2,3),(2,4), (8,9), (8,8), (8,7), (8,6)]
 
+
+#Ploting Nodes
+pylab.ion()
+pylab.xlim=(0,xmax)
+pylab.ylim=(0,ymax)
+x = [ nodes[i][0] for i in range(n) ]
+y = [ nodes[i][1] for i in range(n) ]
+pylab.plot(x , y ,'o')
+for i in range(n):
+	t = pylab.text(x[i], y[i], 'Node ' +str(i))
+
 #Variables & Lists to be used during the code
 gen_1_pvalues = []
 gen_1_svalues = []
 generations_p = []
 generations_s = []
+u_paths = []
 fitness = 0
+
+
+u_choice = raw_input('Do you want to suggest a path? Y/N: ')
+
+
+if u_choice.lower() == 'y':
+	while True:	
+		print 'Enter the desired path, starting and finishing in node 0, separated by spaces'
+		u_path = raw_input(': ')
+		p_tmp = [int(x.strip()) for x in u_path.split(' ') if x.strip() ]
+		gen_1_pvalues.append(p_tmp)
+		distance = 0.0		
+		for j in range(len(p_tmp)-1):
+			distance += calc_dist(nodes[p_tmp[j]], nodes[p_tmp[j+1]])
+		gen_1_svalues.append(distance)
+
+		print ' '
+		answer = raw_input('Do you want to suggest a new path? Y/N: ')
+		if answer.lower() == 'n': break
+
+		
+
+
 
 #Creating first population - random path values
 path_init = range(1,n)
-for i in range(pop_size):
+for i in range(pop_size-len(gen_1_pvalues)):
 	p_tmp = path_init
 	random.shuffle(p_tmp)
 	p_tmp = [0] + p_tmp + [0]
@@ -209,11 +246,12 @@ print 'Minimum distance: ', min_s_gen1
 print 'Path: ', min_p_gen1
 print 'Population size: ', pop_size
 print 'Number of generations: ', number_of_generations
-print 'Number of possible solutions:' + str(n-1) + '! = ' + str(fact(n-1))
+print 'Number of possible solutions: ' + str(n-1) + '! = ' + str(fact(n-1))
 
 
 
 #Ploting
+pylab.figure(2)
 pylab.xlim=(0,xmax)
 pylab.ylim=(0,ymax)
 x = [ nodes[i][0] for i in min_p_gen1 ]
@@ -229,7 +267,7 @@ pylab.xlabel('Minimum total distance: ' + str("%.4f" % min_s_gen1))
 
 
 #Ploting data for maximum values for each generation
-pylab.figure(2)
+pylab.figure(3)
 pylab.plot(range(number_of_generations),generations_s, 'ro')
 pylab.xlabel('Generations')
 pylab.ylabel('Minimum distance')
@@ -237,7 +275,7 @@ pylab.ylabel('Minimum distance')
 pylab.show()
 
 
-pylab.show()
+
 
 
 
